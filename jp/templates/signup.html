@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOB PORTAL</title>
+    <style>
+        /* [Your existing CSS styles] */
+        body {
+            font-family: Arial, sans-serif;
+            background: url("{% static 'images/welcome.jpeg' %}") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Changed from 100vh to min-height for better scrolling */
+        }
+
+        h1 {
+            text-align: center;
+            color: #ecf2f8;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s;
+        }
+
+        .container {
+            background: rgba(164, 162, 162, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            margin: auto;
+            animation: fadeInUp 1s;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #edf6ff;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-control[readonly],
+        .form-control[disabled] {
+            background-color: #e9ecef;
+            opacity: 1;
+        }
+
+        .form-control:hover,
+        .form-control:focus {
+            border-color: #2980b9;
+            box-shadow: 0 0 8px rgba(41, 128, 185, 0.3);
+        }
+
+        .btn-primary {
+            background-color: #626466;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #3d3e3f;
+            box-shadow: 0 5px 15px rgba(33, 97, 140, 0.4);
+        }
+
+        .alert-danger {
+            animation: fadeIn 1s;
+            color: red;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Ensure select dropdowns are responsive */
+        .form-control select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#444546" d="M2 0L0 2h4z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 10px;
+            padding-right: 30px;
+            margin: 0; /* Remove any margin to prevent extra space */
+            padding: 0; /* Adjust padding to remove extra space */
+            line-height: 1.5; /* Set line-height to adjust space */
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group select {
+            width: 100%;
+            border-radius: 4px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            line-height: 1.5; /* Set line-height to adjust space */
+            margin: 0; /* Remove any margin to prevent extra space */
+        }
+
+        .form-group::after {
+            content: '';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            background: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23444546" d="M2 0L0 2h4z"/></svg>') no-repeat center center;
+            pointer-events: none;
+            transform: translateY(-50%);
+        }
+        p {
+            color: #fff;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #000000;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        /* Adjust dropdown width on smaller screens */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 20px;
+                width: 90%;
+            }
+
+            .form-group select {
+                font-size: 0.875rem;
+                padding: 8px;
+                line-height: 1.5; /* Adjust line-height */
+                margin: 0; /* Remove any margin */
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .container {
+                padding: 15px;
+                width: 100%;
+            }
+
+            .btn-primary {
+                font-size: 1rem;
+            }
+
+            .form-group select {
+                font-size: 0.75rem;
+                padding: 8px;
+                line-height: 1.5; /* Adjust line-height */
+                margin: 0; /* Remove any margin */
+            }
+
+            .form-control select {
+                font-size: 0.75rem;
+                padding: 8px;
+                line-height: 1.5; /* Adjust line-height */
+                margin: 0; /* Remove any margin */
+            }
+        }
+
+        /* Additional styles for live validation messages */
+        .validation-error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .validation-success {
+            color: green;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1>Signup</h1>
+        <form method="post" onsubmit="return validateForm()">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" class="form-control" required onblur="checkUsername()">
+                <small id="usernameError" class="validation-error"></small>
+                <small id="usernameSuccess" class="validation-success"></small>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label for="fullname">Name:</label>
+                <input type="text" id="fullname" name="fullname" class="form-control" required>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" required onblur="checkEmail()">
+                <small id="emailError" class="validation-error"></small>
+                <small id="emailSuccess" class="validation-success"></small>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required onkeyup="validatePassword()">
+                <small id="passwordError" class="validation-error"></small>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" required onkeyup="validatePasswordMatch()">
+                <small id="confirmPasswordError" class="validation-error"></small>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label for="user_type">User Type:</label>
+                <select id="user_type" name="user_type" class="form-control" required>
+                    <option value="employer">Employer</option>
+                    <option value="jobseeker">Job Seeker</option>
+                </select>
+            </div>
+            <br><br>
+            <button type="submit" class="btn btn-primary">Signup</button>
+        </form><br><br>
+        <div style="text-align: center;">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+        </div>
+        
+
+    </div>
+    <script>
+        // CSRF token setup for AJAX if needed (not required for GET requests)
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        // AJAX call to check username uniqueness
+        function checkUsername() {
+            const username = document.getElementById("username").value;
+            const usernameError = document.getElementById("usernameError");
+            const usernameSuccess = document.getElementById("usernameSuccess");
+
+            if (username.length === 0) {
+                usernameError.textContent = "";
+                usernameSuccess.textContent = "";
+                return;
+            }
+
+            fetch(`/ajax/check_username/?username=${encodeURIComponent(username)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.is_taken) {
+                        usernameError.textContent = "Username is already in use.";
+                        usernameSuccess.textContent = "";
+                    } else {
+                        usernameError.textContent = "";
+                        usernameSuccess.textContent = "Username is available.";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // AJAX call to check email uniqueness
+        function checkEmail() {
+            const email = document.getElementById("email").value;
+            const emailError = document.getElementById("emailError");
+            const emailSuccess = document.getElementById("emailSuccess");
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (email.length === 0) {
+                emailError.textContent = "";
+                emailSuccess.textContent = "";
+                return;
+            }
+
+            if (!emailRegex.test(email)) {
+                emailError.textContent = "Invalid email format.";
+                emailSuccess.textContent = "";
+                return;
+            }
+
+            fetch(`/ajax/check_email/?email=${encodeURIComponent(email)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.is_taken) {
+                        emailError.textContent = "Email is already in use.";
+                        emailSuccess.textContent = "";
+                    } else {
+                        emailError.textContent = "";
+                        emailSuccess.textContent = "Email is available.";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function validatePassword() {
+            const password = document.getElementById("password").value;
+            const passwordError = document.getElementById("passwordError");
+
+            if (password.length < 8) {
+                passwordError.textContent = "Password must be at least 8 characters long.";
+            } else if (!/[A-Z]/.test(password)) {
+                passwordError.textContent = "Password must contain at least one uppercase letter.";
+            } else if (!/[a-z]/.test(password)) {
+                passwordError.textContent = "Password must contain at least one lowercase letter.";
+            } else if (!/\d/.test(password)) {
+                passwordError.textContent = "Password must contain at least one digit.";
+            } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                passwordError.textContent = "Password must contain at least one special character.";
+            } else {
+                passwordError.textContent = "";
+            }
+        }
+
+        function validatePasswordMatch() {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm_password").value;
+            const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = "Passwords do not match.";
+            } else {
+                confirmPasswordError.textContent = "";
+            }
+        }
+
+        function validateForm() {
+            // Ensure all AJAX validations pass before submitting
+            const usernameError = document.getElementById("usernameError").textContent;
+            const emailError = document.getElementById("emailError").textContent;
+            const passwordError = document.getElementById("passwordError").textContent;
+            const confirmPasswordError = document.getElementById("confirmPasswordError").textContent;
+
+            if (usernameError || emailError || passwordError || confirmPasswordError) {
+                alert("Please fix the errors in the form before submitting.");
+                return false;
+            }
+
+            // Optionally, you can add more client-side validations here
+            return true;
+        }
+    </script>
+</body>
+
+</html>

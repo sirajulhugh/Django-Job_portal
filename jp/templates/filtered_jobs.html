@@ -1,0 +1,305 @@
+{% extends 'page3.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>Filtered Jobs</title>
+    <style>
+        body {
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background-color: rgba(79, 75, 75, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s;
+        }
+
+        .card {
+            border-radius: 1em;
+            box-shadow: 4px 2px 7px 5px #3d3b3b;
+            background-color: rgb(255, 249, 241);
+            margin-bottom: 20px;
+        }
+
+        .card-content {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card-logo {
+            flex: 0 0 20%;
+            max-width: 20%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .card-logo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .card-details {
+            flex: 1;
+            padding: 0 20px;
+        }
+
+        .card-details h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .card-details p {
+            margin: 5px 0;
+            color: #495057;
+        }
+
+        .card-apply {
+            flex: 0 0 20%;
+            max-width: 20%;
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: column; /* Stack buttons vertically */
+            align-items: center;
+        }
+
+        .card-apply .btn-apply {
+            background-color: #767467;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px; /* Add gap between Save and Apply buttons */
+        }
+
+        .card-apply .btn-apply:hover {
+            background-color: #42423b;
+        }
+
+        @media (max-width: 768px) {
+            .card-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .card-logo,
+            .card-apply {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .card-details {
+                padding: 0;
+            }
+
+            .card-apply {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-details h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center" style="color: aliceblue;">Filtered Jobs</h1>
+        <form method="get" class="mb-4 animate__animated animate__fadeInUp">
+            <div class="form-row">
+                <!-- Form fields -->
+                <div class="col-md-6 mb-3 animate__animated animate__fadeInLeft animate__delay-1s">
+                    <label for="title_keyword" style="color: aliceblue;">Job Title:</label>
+                    <input type="text" id="title_keyword" name="title_keyword" class="form-control" value="{{ title_keyword }}">
+                </div>
+                <div class="col-md-6 mb-3 animate__animated animate__fadeInLeft animate__delay-1.5s">
+                    <label for="section" style="color: aliceblue;">Section:</label>
+                    <select id="section" name="section" class="form-control">
+                        <option value="">All Sections</option>
+                        {% for section in sections %}
+                            <option value="{{ section.id }}" {% if section.id == section_id %}selected{% endif %}>
+                                {{ section.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3 animate__animated animate__fadeInLeft animate__delay-1.5s">
+                    <label for="type" style="color: aliceblue;">Type:</label>
+                    <select id="type" name="type" class="form-control">
+                        <option value="">All Types</option>
+                        {% for type in types %}
+                            <option value="{{ type.id }}" {% if type.id == type_id %}selected{% endif %}>
+                                {{ type.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3 animate__animated animate__fadeInLeft animate__delay-2s">
+                    <label for="city_keyword" style="color: aliceblue;">Employer City:</label>
+                    <input type="text" id="city_keyword" name="city_keyword" class="form-control" value="{{ city_keyword }}">
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-light animate__animated animate__fadeInUp animate__delay-2.5s">Filter</button>
+            </div>
+        </form>
+        
+        <div class="row">
+            {% for job in jobs %}
+                <div class="col-lg-10 col-sm-12 mx-auto">
+                    <div class="card animate__animated animate__fadeInUp">
+                        <div class="card-content">
+                            <div class="card-logo animate__animated animate__fadeInLeft animate__delay-1s">
+                                <figure>
+                                    <img src="{{ job.employer.logo.url }}" alt="{{ job.employer.name }} Logo" title="{{ job.employer.name }} Logo">
+                                    <figcaption class="text-center mt-2">{{ job.employer.name }} </figcaption>
+                                </figure>
+                            </div>
+                            <div class="card-details animate__animated animate__fadeInLeft animate__delay-1.5s">
+                                <h2>Title: {{ job.title }}</h2>
+                                <p class="title">Section: {{ job.section.name }}</p>
+                                <p>Company: {{ job.employer.name }}</p>
+                                <p>Experience: {{ job.experiance }}</p>
+                                <p>Skills: {{ job.skills }}</p>
+                                <p>Branch: {{ job.city }}</p>
+                                <p>Valid: From: {{ job.fromd }} To: {{ job.tod }}</p>
+                                <p>Type: {{ job.type.name }}</p>
+                                <p>Education: {{ job.education }}</p>
+                                <p>Description: {{ job.description }}</p>
+                                <!-- View More Details Link -->
+                                <button 
+                                    style="background-color: #7a7a75;" 
+                                    type="button" 
+                                    class="btn btn-primary mt-3" 
+                                    onclick="openModal('{{ job.id }}')" 
+                                    onmouseover="this.style.backgroundColor='#3b3b38'" 
+                                    onmouseout="this.style.backgroundColor='#7a7a75'">
+                                    View More Details
+                                </button>
+                            </div>
+                            <br><br>
+                            <div class="card-apply animate__animated animate__fadeInLeft animate__delay-2s">
+                                <div> 
+                                    <a href="{% url 'save_job' job.id %}" class="btn-apply">Save</a>
+                                </div><br><br><br><br>
+                                <div> 
+                                    <a href="{% url 'view_job_details' job.id %}" class="btn-apply">Apply</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal for each job card -->
+                <div class="modal fade" id="employerDetailsModal-{{ job.id }}" tabindex="-1" aria-labelledby="employerDetailsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="employerDetailsModalLabel">Company Details</h5>
+                                <button type="button" class="btn-close" onclick="closeModal('employerDetailsModal-{{ job.id }}')" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% if job.employer.name %}
+                                <h5>Name: {{ job.employer.name }}</h5>
+                                {% endif %}
+                                {% if job.employer.address %}
+                                <p>Address: {{ job.employer.address }}</p>
+                                {% endif %}
+                                {% if job.employer.phonenumber %}
+                                <p>Phone Number: {{ job.employer.phonenumber }}</p>
+                                {% endif %}
+                                {% if job.employer.pincode %}
+                                <p>Pincode: {{ job.employer.pincode }}</p>
+                                {% endif %}
+                                {% if job.employer.state %}
+                                <p>State: {{ job.employer.state }}</p>
+                                {% endif %}
+                                {% if job.employer.city %}
+                                <p>City: {{ job.employer.city }}</p>
+                                {% endif %}
+                                {% if job.employer.description %}
+                                <p>Description: {{ job.employer.description }}</p>
+                                {% endif %}
+                                {% if job.employer.document %}
+                                <p>
+                                    Document: 
+                                    <a href="{{ job.employer.document.url }}" download class="btn btn-secondary">Download</a>
+                                </p>
+                                {% endif %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="closeModal('employerDetailsModal-{{ job.id }}')">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+            <p class="text-center">No jobs available.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <!-- Notification Modal -->
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
+                <button type="button" class="close" onclick="closeModal('notificationModal')" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                We have found {{ jobs.count }} job(s) that match your section.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('notificationModal')">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+    <!-- Script to trigger the modal on page load -->
+    <script>
+        // $(document).ready(function() {
+        //     $('#notificationModal').modal('show');
+        // });
+        
+        function openModal(jobId) {
+            $('#employerDetailsModal-' + jobId).modal('show');
+        }
+        function closeModal(modalId) {
+        $('#' + modalId).modal('hide');
+    }
+    
+    </script>
+</body>
+</html>
+{% endblock %}

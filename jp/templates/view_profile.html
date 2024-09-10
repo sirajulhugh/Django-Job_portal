@@ -1,0 +1,175 @@
+{% extends 'page2.html' %}
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Employer Profile</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            /* background: linear-gradient(135deg, #74ebd5, #ACB6E5); */
+            color: #333;
+        }
+
+        .container {
+            margin-top: 50px;
+            max-width: 1000px;
+        }
+
+        .profile-card {
+            background: rgba(110, 108, 108, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .profile-card h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            color: #e6edf1;
+        }
+
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid #737476;
+        }
+
+        .profile-details p {
+            margin: 10px 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .profile-details  {
+            color: #d1d4db;
+        }
+
+        .edit-btn {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .edit-btn a {
+            color: #fff;
+            font-size: 18px;
+            padding: 10px 30px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .edit-btn a:hover {
+            background-color: #b4b9be;
+            color: #fff;
+        }
+
+        @media (max-width: 576px) {
+            .profile-card {
+                padding: 20px;
+            }
+
+            .profile-card h2 {
+                font-size: 24px;
+            }
+
+            .profile-card img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-details p {
+                font-size: 16px;
+            }
+
+            .edit-btn a {
+                font-size: 16px;
+                padding: 8px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="profile-card text-center">
+            <h2>Profile</h2>
+
+{% if employer.logo %}
+<div>
+    <img src="{{ employer.logo.url }}" alt="{{ employer.name }} Logo" class="img-fluid">
+</div>
+{% endif %}
+
+<div class="profile-details text-start mt-4">
+    {% if employer.name %}
+    <p><strong>Name:</strong> {{ employer.name }}</p>
+    {% endif %}
+    
+    {% if employer.address %}
+    <p><strong>Address:</strong> {{ employer.address }}</p>
+    {% endif %}
+    
+    {% if employer.phonenumber %}
+    <p><strong>Phone Number:</strong> {{ employer.phonenumber }}</p>
+    {% endif %}
+    
+    {% if employer.pincode %}
+    <p><strong>Pincode:</strong> {{ employer.pincode }}</p>
+    {% endif %}
+    
+    {% if employer.state %}
+    <p><strong>State:</strong> {{ employer.state }}</p>
+    {% endif %}
+    
+    {% if employer.city %}
+    <p><strong>City:</strong> {{ employer.city }}</p>
+    {% endif %}
+    
+    {% if employer.description %}
+    <p><strong>Description:</strong> {{ employer.description }}</p>
+    {% endif %}
+    
+    {% if employer.section %}
+    <p><strong>Section:</strong> {{ employer.section }}</p>
+    {% endif %}
+    
+    <p><strong>Document:</strong>
+        {% if employer.document %}
+        <a href="{{ employer.document.url }}" class="btn btn-dark" download>Download</a>
+        {% else %}
+        No document uploaded.
+        {% endif %}
+    </p>
+</div>
+
+            <div class="edit-btn">
+                <a href="{% url 'complete_employer_registration' %}" class="btn btn-outline-dark btn-lg">Add/Edit </a>
+            </div>
+        </div>
+    </div>
+<br><br><br><br><br><br><br><br>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+
+
+{% endblock %}

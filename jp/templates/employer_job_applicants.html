@@ -1,0 +1,164 @@
+{% extends 'page2.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOB PORTAL</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #a1cdec, #e0b0ff);
+        } */
+        .container {
+            background-color: rgba(88, 86, 86, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: auto;
+            animation: fadeInUp 1s;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #f9fdff;
+        }
+        table {
+            background-color: rgba(4, 0, 0, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        th {
+            background-color: #007bff;
+            color: rgb(221, 219, 219);
+            text-align: center;
+        }
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        a {
+            text-decoration: none;
+        }
+        .btn-action {
+            border-radius: 20px;
+            padding: 5px 15px;
+            transition: background-color 0.3s;
+            margin: 0 5px;
+        }
+        .btn-approve {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-approve:hover {
+            background-color: #218838;
+        }
+        .btn-reject {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-reject:hover {
+            background-color: #c82333;
+        }
+        .btn-pending {
+            background-color: #ffc107;
+            color: white;
+        }
+        .btn-pending:hover {
+            background-color: #e0a800;
+        }
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr {
+                margin-bottom: 15px;
+            }
+            td {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+            td:before {
+                position: absolute;
+                top: 50%;
+                left: 10px;
+                transform: translateY(-50%);
+                white-space: nowrap;
+                font-weight: bold;
+            }
+            td:nth-of-type(1):before { content: "Job Title"; }
+            td:nth-of-type(2):before { content: "Section"; }
+            td:nth-of-type(3):before { content: "Company"; }
+            td:nth-of-type(4):before { content: "Applicant Name"; }
+            td:nth-of-type(5):before { content: "Action"; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container"><br><br><br>
+        <h1>Job Applicants</h1>
+        <br><br>
+        {% if error_message %}
+            <div class="alert alert-danger animate__animated animate__bounceIn animate__delay-1s hover-scale" style="text-align: center; max-width: 600px; margin: 20px auto;">
+            {{ error_message }}
+            </div>
+        {% endif %}
+        {% if jobs_with_applicants %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Section</th>
+                            <th>Location</th>
+                            <th>Applicant Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in jobs_with_applicants %}
+                        <tr>
+                            <td>{{ job.title|default_if_none:"" }}</td>
+                            <td>{{ job.section.name|default_if_none:"" }}</td>
+                            <td>{{ job.city|default_if_none:"" }}</td>
+                            <td>{{ job.employee.fullname|default_if_none:"" }}</td>
+                            <td>
+                                <a href="{% url 'view_employee_details' job.employee.id %}" class="btn-view" style="text-decoration: none;color: #545658;">View Details</a>
+                                <a href="{% url 'approve_job' job.id %}" class="btn-action btn-approve" style="text-decoration: none;">Approve</a>
+                                <a href="{% url 'reject_job' job.id %}" class="btn-action btn-reject" style="text-decoration: none;">Reject</a>
+                                <a href="{% url 'mark_as_pending' job.id %}" class="btn-action btn-pending" style="text-decoration: none;">Pending</a>
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">
+                No job seekers have applied for your jobs yet.
+            </div>
+        {% endif %}
+    </div>
+    <br><br><br><br><br><br><br><br><br><br>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+{% endblock %}

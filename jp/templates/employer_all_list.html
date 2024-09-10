@@ -1,0 +1,101 @@
+{% extends 'page2.html' %}
+{% block content %}
+<title>JOB PORTAL</title>
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: #f6f6ff;">Job Listings</h2>
+    {% if error_message %}
+            <div class="alert alert-danger animate__animated animate__bounceIn animate__delay-1s hover-scale" style="text-align: center; max-width: 600px; margin: 20px auto;">
+            {{ error_message }}
+            </div>
+    {% endif %}
+    <div class="table-responsive">
+        <table class="table table-hover mt-4 custom-table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Section</th>
+                    <th>Experience</th>
+                    <th>Skills</th>
+                    <th>Details</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.section.name }}</td>
+                    <td>{{ job.experiance }}</td>
+                    <td>{{ job.skills }}</td>
+                    <td><a href="{% url 'job_det' job.id %}" class="btn btn-dark">
+                        View More Details
+                    </a></td>
+                    <td>
+                        {% if job.approval == True %}
+                            <span style="color: green;">Approved</span>
+                        {% elif job.approval == False %}
+                            <span style="color: red;">Rejected</span>
+                        {% else %}
+                            <span style="color: yellow;">Pending</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<style>
+    /* body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #a1cdec, #e0b0ff);
+    } */
+    .container {
+            background-color: rgba(106, 102, 102, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: auto;
+            animation: fadeInUp 1s;
+        }
+
+    .custom-table {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: rgba(243, 237, 237, 0.5);
+    }
+
+    .custom-table thead {
+        background-color: #c2bdbd;
+        color: #f5f7f8;
+    }
+
+    .custom-table th, .custom-table td {
+        padding: 15px;
+        vertical-align: middle;
+    }
+
+    .custom-btn {
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .custom-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Media query for responsiveness */
+    @media (max-width: 768px) {
+        .custom-table {
+            font-size: 14px;
+        }
+
+        .custom-btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+{% endblock %}

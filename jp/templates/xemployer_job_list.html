@@ -1,0 +1,139 @@
+{% extends 'page2.html' %}
+{% block content %}
+<title>JOB PORTAL</title>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: #f5faff;">Job Notifications</h2>
+    
+    <!-- Cards for Job Notifications -->
+    <div class="row">
+        {% for job in jobs %}
+        <div class="col-md-6 mb-4">
+            <div class="card custom-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ job.title }}</h5>
+                    <p class="card-text">
+                        Section: {{ job.section.name }}<br>
+                        Status: 
+                        {% if job.approval %}
+                            <span class="text-success">Approved</span>
+                        {% else %}
+                            <span class="text-danger">Rejected</span>
+                        {% endif %}
+                    </p>
+                    <p class="card-text">
+                        {% if job.approval %}
+                            Your job listing "{{ job.title }}" has been approved. You can now view it live on the platform.
+                        {% else %}
+                            Unfortunately, your job listing "{{ job.title }}" was rejected. Please review the details and try submitting it again.
+                        {% endif %}
+                    </p>
+                    <form action="{% url 'acknowledge_job' job.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-dark custom-btn" 
+                                onmouseover="this.style.backgroundColor='#3b3b38'" 
+                                onmouseout="this.style.backgroundColor='#7a7a75'">
+                            Acknowledge
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
+                <button type="button" class="btn-close" id="closeModalButton" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>You have {{ count }} update{{ count|pluralize }} from the admin side, regarding your job listings.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="closeModalFooterButton">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br>
+<style>
+    .container {
+        background-color: rgba(96, 92, 92, 0.8);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        max-width: 1200px;
+        margin: auto;
+        animation: fadeInUp 1s;
+    }
+
+    .custom-card {
+        background-color: rgba(221, 213, 213, 0.7);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        border: none;
+        border-radius: 10px;
+    }
+
+    .custom-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .custom-btn {
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .custom-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .text-success {
+        color: #28a745;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    /* Media query for responsiveness */
+    @media (max-width: 768px) {
+        .custom-card {
+            font-size: 14px;
+        }
+
+        .custom-btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var notificationCount = {{ count }};
+        if (notificationCount > 0) {
+            $('#notificationModal').modal('show');
+        }
+
+        // Close modal when close button in header is clicked
+        $('#closeModalButton').click(function() {
+            $('#notificationModal').modal('hide');
+        });
+
+        // Close modal when close button in footer is clicked
+        $('#closeModalFooterButton').click(function() {
+            $('#notificationModal').modal('hide');
+        });
+    });
+</script>
+
+{% endblock %}

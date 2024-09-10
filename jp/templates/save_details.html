@@ -1,0 +1,82 @@
+{% extends 'page3.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOB PORTAL</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(81, 79, 79, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: aliceblue;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: aliceblue;
+        }
+        .btn-primary {
+            background-color: #757678;
+            border: none;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #2c2d2e;
+        }
+    </style>
+    <!-- <script>
+        function redirectAfterSubmit(event) {
+            event.preventDefault(); // Prevent the default form submission
+            // Here you can add any form validation or processing if needed
+
+            // Redirect to a specific page
+            window.location.href = "jobseeker-dashboard/"; // Replace with your desired redirect URL
+        }
+    </script> -->
+</head>
+<body>
+    <div class="container">
+        <h2>Application Details</h2>
+        <form method="post" >
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="full_name">Describe yourself in a sentence</label>
+                <input type="text" class="form-control" id="full_name" name="full_name" required>
+            </div>
+            <div class="form-group">
+                <label for="qualifications">Reason to apply</label>
+                <input type="text" class="form-control" id="qualifications" name="qualifications" required>
+            </div>
+            <div class="form-group">
+                <label for="skills">Extra Skills</label>
+                <textarea class="form-control" id="skills" name="skills" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="age">Year gaps if any</label>
+                <input type="number" class="form-control" id="age" name="age" required>
+            </div>
+            <div style="text-align: center;">
+                
+                <a href="{% url 'apply_save' job.id %}" class="btn btn-primary mt-4 btn-custom" style="text-align: right;">Submit</a>
+            </div>
+        </form>
+    </div>
+    
+        
+</body>
+</html>
+{% endblock %}

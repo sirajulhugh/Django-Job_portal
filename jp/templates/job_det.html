@@ -1,0 +1,112 @@
+{% extends 'page2.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ job.title }} - Job Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: rgba(93, 90, 90, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #f9fcff;
+            animation: fadeInDown 1s;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: #f9fcff;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Job Details</h2>
+        
+        {% if job.title %}
+            <p><strong>Title:</strong> {{ job.title }}</p>
+        {% endif %}
+        
+        {% if job.employer.name %}
+            <p><strong>Company Name:</strong> {{ job.employer.name }}</p>
+        {% endif %}
+        
+        {% if job.section.name %}
+            <p><strong>Section:</strong> {{ job.section.name }}</p>
+        {% endif %}
+        
+        {% if job.type.name %}
+            <p><strong>Type:</strong> {{ job.type.name }}</p>
+        {% endif %}
+        
+        {% if job.experiance %}
+            <p><strong>Experience:</strong> {{ job.experiance }}</p>
+        {% endif %}
+        
+        {% if job.skills %}
+            <p><strong>Skills:</strong> {{ job.skills }}</p>
+        {% endif %}
+        
+        {% if job.city %}
+            <p><strong>City:</strong> {{ job.city }}</p>
+        {% endif %}
+        
+        {% if job.fromd %}
+            <p><strong>From Date:</strong> {{ job.fromd }}</p>
+        {% endif %}
+        
+        {% if job.tod %}
+            <p><strong>To Date:</strong> {{ job.tod }}</p>
+        {% endif %}
+        
+        {% if job.education %}
+            <p><strong>Education:</strong> {{ job.education }}</p>
+        {% endif %}
+        
+        {% if job.description %}
+            <p><strong>Description:</strong> {{ job.description }}</p>
+        {% endif %}
+        
+        {% if job.employer.user.email %}
+            <p><strong>Company Email:</strong> {{ job.employer.user.email }}</p>
+        {% endif %}
+        
+        {% if job.employer.phonenumber %}
+            <p><strong>Company Phone:</strong> {{ job.employer.phonenumber }}</p>
+        {% endif %}
+        
+        
+    </div>
+<br><br><br><br><br><br><br><br><br><br><br><br>  
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+{% endblock %}

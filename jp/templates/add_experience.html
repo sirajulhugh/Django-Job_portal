@@ -1,0 +1,258 @@
+{% extends 'page3.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOB PORTAL</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: rgba(83, 81, 81, 0.8);
+            padding: 40px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h2, h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #f1f6ff;
+        }
+
+        .form-container {
+            margin-bottom: 40px;
+            animation: bounceInLeft 1.5s;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #fff5f5;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="date"]:focus,
+        .form-group input[type="file"]:focus {
+            border-color: #434547;
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e9ffff;
+            color: #504c4c;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            animation: zoomIn 1s;
+        }
+
+        .btn:hover {
+            background-color: #c1c7cc;
+        }
+
+        .table-container {
+            margin-top: 50px;
+            overflow-x: auto;
+            animation: bounceInRight 1.5s;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #5d5e5f;
+            color: #ffffff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-submit {
+            color: #d1c9c9;
+            margin-top: 30px;
+            background-color: #525653;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .btn-submit:hover {
+            background-color: #282a28;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2, h3 {
+                font-size: 24px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container form-container">
+        <h2 class="animate__animated animate__fadeInDown">Add Experience</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="position">Position</label>
+                <input type="text" id="position" name="position" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="institute">Institute</label>
+                <input type="text" id="institute" name="institute" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="fromd">From Date</label>
+                <input type="date" id="fromd" name="fromd" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="tod">To Date</label>
+                <input type="date" id="tod" name="tod" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="document">Document</label>
+                <input type="file" id="document" name="document" class="form-control" required>
+            </div>
+            <button type="submit" name="add" class="btn">Add</button>
+        </form>
+    </div>
+
+    <div class="container table-container">
+        <h3 class="animate__animated animate__fadeInUp">Experience Entries</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Institute</th>
+                    <th>Description</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Document</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for experience in experience_list %}
+                <tr>
+                    <td>{{ experience.position }}</td>
+                    <td>{{ experience.institute }}</td>
+                    <td>{{ experience.description }}</td>
+                    <td>{{ experience.fromd }}</td>
+                    <td>{{ experience.tod }}</td>
+                    <td>
+                        {% if experience.document %}
+                            <a href="{{ experience.document.url }}" target="_blank" style="color: #000000;text-decoration: none;">View</a>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+<br><br><br><br>
+        <!-- Final Submit Button -->
+        <form method="POST" class="d-flex justify-content-center">
+            {% csrf_token %}
+            <button type="submit" name="submit" class="btn btn-primary">Submit All</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function adjustSelectClass() {
+            var selects = document.querySelectorAll('select');
+    
+            selects.forEach(function(select) {
+                function setClassBasedOnScreenSize() {
+                    if (window.innerWidth <= 576) {
+                        select.className = 'form-control';
+                        
+                        select.addEventListener('focus', function() {
+                            select.className = '';
+                        });
+    
+                        select.addEventListener('change', function() {
+                            select.className = 'form-control';
+                        });
+    
+                        select.addEventListener('blur', function() {
+                            select.className = 'form-control';
+                        });
+                    } else {
+                        select.className = 'form-control';
+                    }
+                }
+    
+                setClassBasedOnScreenSize();
+    
+                // Listen for screen resize to apply the logic again
+                window.addEventListener('resize', setClassBasedOnScreenSize);
+            });
+        }
+    
+        window.addEventListener('load', adjustSelectClass);
+    </script>
+</body>
+</html>
+{% endblock %}

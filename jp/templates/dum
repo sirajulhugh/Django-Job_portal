@@ -1,0 +1,73 @@
+
+@user_passes_test(admin_check, login_url='login') 
+  
+@user_passes_test(staff_check, login_url='login') 
+
+@user_passes_test(regular_user_check, login_url='login') 
+
+
+
+<div class="card-apply animate__animated animate__fadeInLeft animate__delay-2s">
+    <div> <a href="{% url 'undo_save' job.id %}" class="btn-apply" >Undosave</a></div>
+    <br><br><br><br>
+    <div>  <a href="{% url 'save_details' job.id %}" class="btn-apply ">Apply</a> </div>
+ </div>
+
+
+
+
+
+
+
+
+
+{% url 'apply_job' job.id %}
+
+
+
+{% extends 'page3.html' %}
+{% block content %}
+
+
+{% endblock %}
+
+
+<!-- {% if job_count > 0 %}
+            <div class="notification text-center mx-auto mb-3">
+                <a href="{% url 'matching_jobs' %}" class="text-white text-decoration-none">
+                    🔔<span>{{ job_count }}</span>
+                </a>
+            </div>
+        {% endif %} -->
+
+
+    employee = Employee.objects.get(user=request.user)
+    
+    
+    # Count the number of jobs matching the employee's section where employee is null
+    conflicting_jobs = Job.objects.filter(
+        section=employee.section
+    ).filter(
+        Q(employee__isnull=True) | Q(employee=employee)
+    ).values('title', 'section', 'employer').distinct()
+
+    # Step 2: Filter out the jobs that have conflicting entries
+    filtered_jobs = Job.objects.filter(
+        section=employee.section,
+        employee__isnull=True
+    )
+
+    for job in conflicting_jobs:
+        if Job.objects.filter(
+            title=job['title'],
+            section=job['section'],
+            employer=job['employer'],
+            employee=employee
+        ).exists():
+            filtered_jobs = filtered_jobs.exclude(
+                title=job['title'],
+                section=job['section'],
+                employer=job['employer']
+            )
+
+    job_count = filtered_jobs.count()

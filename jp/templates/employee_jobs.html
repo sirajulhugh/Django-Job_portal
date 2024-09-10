@@ -1,0 +1,137 @@
+{% extends 'page3.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOB PORTAL</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: rgba(82, 78, 78, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #eef7ff;
+            animation: fadeInDown 1s;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background-color: #7f8184;
+            color: white;
+            padding: 15px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-bottom: 2px solid #0056b3;
+        }
+
+        .card-body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .card-title {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .card-text {
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            font-size: 1rem;
+            margin-right: 5px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>My Job Listings</h2>
+        <div class="row">
+            {% for job in jobs %}
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        {{ job.title }}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ job.section.name }}</h5>
+                        <p class="card-text"><strong>Company:</strong> {{ job.employer.name }}</p>
+                        <p class="card-text">
+                            <strong>Status:</strong>
+                            {% if job.status == job.PENDING %}
+                            <span class="badge badge-warning">Pending</span>
+                            {% elif job.status == job.APPROVED %}
+                            <span class="badge badge-success">Approved</span>
+                            {% elif job.status == job.REJECTED %}
+                            <span class="badge badge-danger">Rejected</span>
+                            {% elif job.status == job.NONE %}
+                            <span class="badge badge-secondary">None</span>
+                            {% endif %}
+                        </p>
+                        <!-- Link to Job Detail Page -->
+                        <a href="{% url 'job_detail' job.id %}" class="btn btn-dark">
+                            View More Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center" role="alert">
+                    No jobs found
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+{% endblock %}

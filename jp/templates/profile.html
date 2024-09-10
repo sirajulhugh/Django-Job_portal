@@ -1,0 +1,370 @@
+{% extends 'page3.html' %}
+{% block content %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOB PORTAL</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* body {
+            background: linear-gradient(135deg, #e7a977, #ebbe9b);
+            font-family: 'Arial', sans-serif;
+        } */
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #ffffff;
+            animation: fadeInDown 1s;
+        }
+        h3 {
+            text-align: center;
+            margin-top: 20px;
+            color: #fef3f3;
+            animation: fadeInDown 1s;
+        }
+
+        .container {
+            max-width: 1200px;
+            background-color: rgba(88, 83, 83, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            color: #eeeefd;
+        }
+
+        .profile-details,
+        .profile-image-resume {
+            flex: 1;
+            min-width: 250px;
+            color: #fff3f3;
+        }
+
+        .profile-section h3 {
+            color: #eeeefd;
+            border-bottom: 2px solid #585b5f;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            animation: fadeInLeft 0.5s;
+        }
+
+        .profile-section p {
+            margin-bottom: 10px;
+            color: #ecf2f9;
+            animation: fadeInRight 0.5s;
+        }
+
+        .profile-image-resume {
+            text-align: center;
+            animation: fadeInRight 0.5s;
+        }
+
+        .profile-image-resume img {
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 180px;
+            height: 180px;
+        }
+
+        .profile-image-resume a {
+            display: block;
+            margin-top: 15px;
+            color: #ecf2f9;
+        }
+
+        table {
+            width: 100%;
+            background-color: white;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.5s;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #727375;
+            color: rgb(63, 60, 60);
+        }
+
+        td a {
+            color: #4a4e52;
+            text-decoration: none;
+        }
+        a {
+            color: #4a4e52;
+            text-decoration: none;
+        }
+        
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .profile-section {
+                flex-direction: column;
+            }
+
+            .profile-image-resume img {
+                width: 120px;
+                height: 120px;
+            }
+
+            th,
+            td {
+                padding: 10px;
+            }
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        /* Make tables responsive */
+        .table-responsive {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Jobseeker Profile</h2>
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <!-- Left Half: Personal Information -->
+            <div class="profile-details">
+                <h3>Personal Information</h3>
+            
+                {% if employee.fullname %}
+                <p><strong>Full Name:</strong> {{ employee.fullname }}</p>
+                {% endif %}
+            
+                {% if employee.date %}
+                <p><strong>Date of Birth:</strong> {{ employee.date }}</p>
+                {% endif %}
+            
+                {% if employee.address %}
+                <p><strong>Address:</strong> {{ employee.address }}</p>
+                {% endif %}
+            
+                {% if employee.phonenumber %}
+                <p><strong>Phone Number:</strong> {{ employee.phonenumber }}</p>
+                {% endif %}
+            
+                {% if employee.city %}
+                <p><strong>City:</strong> {{ employee.city }}</p>
+                {% endif %}
+            
+                {% if employee.state %}
+                <p><strong>State:</strong> {{ employee.state }}</p>
+                {% endif %}
+            
+                {% if employee.pincode %}
+                <p><strong>Pincode:</strong> {{ employee.pincode }}</p>
+                {% endif %}
+            
+                {% if employee.user.email %}
+                <p><strong>Email:</strong> {{ employee.user.email }}</p>
+                {% endif %}
+            </div>
+            
+            <!-- Right Half: Profile Image and Resume -->
+            <div class="profile-image-resume">
+                {% if employee.image %}
+                <p><strong>Profile Image:</strong><br><img src="{{ employee.image.url }}" alt="Profile Image"></p>
+                {% endif %}
+            
+                {% if employee.resume %}
+                <p><strong>Resume:</strong><a href="{{ employee.resume.url }}" target="_blank" style="text-decoration: none;">View</a></p>
+                {% endif %}
+            </div>
+            
+        </div>
+
+        <!-- Experience Section -->
+        <div class="details-section">
+            <h3>Experience</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Institute</th>
+                            <th>Description</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Document</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for experience in experience_list %}
+                        <tr>
+                            <td>{{ experience.position }}</td>
+                            <td>{{ experience.institute }}</td>
+                            <td>{{ experience.description }}</td>
+                            <td>{{ experience.fromd }}</td>
+                            <td>{{ experience.tod }}</td>
+                            <td>
+                                {% if experience.document %}
+                                <a href="{{ experience.document.url }}" target="_blank" style="text-decoration: none;">View</a>
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="details-section">
+            <h3>Education</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Institute</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Document</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for education in education_list %}
+                        <tr>
+                            <td>{{ education.course }}</td>
+                            <td>{{ education.institute }}</td>
+                            <td>{{ education.fromd }}</td>
+                            <td>{{ education.tod }}</td>
+                            <td>
+                                {% if education.document %}
+                                <a href="{{ education.document.url }}" target="_blank" style="text-decoration: none;">View</a>
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="details-section">
+            <h3>Skills</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Skill Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for skill in skills_list %}
+                        <tr>
+                            <td>{{ skill.name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+<br><br><br>
+        <div style="text-align: center;">
+            <a href="{% url 'complete_registration' %}" class="btn btn-dark mt-4 btn-custom">Add/Edit </a>
+        </div>
+
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+{% endblock %}

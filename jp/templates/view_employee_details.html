@@ -1,0 +1,137 @@
+{% extends 'page2.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOB PORTAL</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* body {
+            background: linear-gradient(135deg, #a1cdec, #e0b0ff);
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        } */
+        .container {
+            background-color: rgba(81, 78, 78, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: auto;
+            animation: fadeInUp 1s;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #e8e8f4;
+        }
+        img {
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .employee-details {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7) ;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .employee-details p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .employee-details strong {
+            color: #616264;
+        }
+        .employee-details a {
+            color: #4e544f;
+            text-decoration: none;
+        }
+        .employee-details a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            margin-top: 30px;
+            color: #e7f0f0;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background-color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
+        }
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            .employee-details p {
+                font-size: 1rem;
+            }
+            ul li {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container"><br><br>
+        <h1>{{ employee.fullname }}</h1>
+        {% if employee.image %}
+            <img src="{{ employee.image.url }}" alt="Employee Image" class="img-fluid" style="max-width: 150px;">
+        {% endif %}
+        <div class="employee-details mt-4">
+            <p><strong>Date of Birth:</strong> {{ employee.date }}</p>
+            <p><strong>Address:</strong> {{ employee.address }}</p>
+            <p><strong>Phone Number:</strong> {{ employee.phonenumber }}</p>
+            <p><strong>City:</strong> {{ employee.city }}</p>
+            <p><strong>State:</strong> {{ employee.state }}</p>
+            <p><strong>Pincode:</strong> {{ employee.pincode }}</p>
+            {% if employee.resume %}
+                <p><strong>Resume:</strong> <a href="{{ employee.resume.url }} " style="text-decoration: none;" target="_blank">View</a></p>
+            {% else %}
+                <p><strong>Resume:</strong> N/A</p>
+            {% endif %}
+        </div>
+
+        <h2>Education</h2>
+        <ul>
+            {% for education in education_details %}
+                <li>{{ education.course }} from {{ education.institute }} ({{ education.fromd }} to {{ education.tod }})</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Experience</h2>
+        <ul>
+            {% for experience in experience_details %}
+                <li>{{ experience.position }} at {{ experience.institute }} ({{ experience.fromd }} to {{ experience.tod }})</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Skills</h2>
+        <ul>
+            {% for skill in skills_details %}
+                <li>{{ skill.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+<br><br><br>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+{% endblock %}

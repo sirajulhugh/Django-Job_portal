@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container"><br><br><br>
+    {% if messages %}
+  <div id="message-container" class="center-message">
+    <ul>
+      {% for message in messages %}
+        <li class="alert alert-success" >{{ message }}</li>  <!-- You can change the class for styling -->
+      {% endfor %}
+    </ul>
+  </div>
+  
+  <!-- Add this script to hide the message after 3 seconds -->
+  <script>
+    setTimeout(function() {
+      var messageContainer = document.getElementById('message-container');
+      if (messageContainer) {
+        messageContainer.style.display = 'none';
+      }
+    }, 3000); // 3000 milliseconds = 3 seconds
+  </script>
+{% endif %}
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh;">
+    <h2 class="mb-4 text-center">Admin Dashboard</h2>
+    <div class="row text-center">
+        <div class="col-lg mb-4">
+            <a href="{% url 'manage_types' %}" class="link-box d-flex flex-column align-items-center justify-content-center">
+                <i class="fas fa-cogs fa-3x"></i>
+                <span class="mt-2">Manage Types</span>
+            </a>
+        </div>
+        <div class="col-lg mb-4">
+            <a href="{% url 'list_employers' %}" class="link-box d-flex flex-column align-items-center justify-content-center">
+                <i class="fas fa-list fa-3x"></i>
+                <span class="mt-2">List Companies</span>
+            </a>
+        </div>
+        <div class="col-lg mb-4">
+            <a href="{% url 'pending_jobs' %}" class="link-box d-flex flex-column align-items-center justify-content-center">
+                <i class="fas fa-tag fa-3x"></i>
+                <span class="mt-2">Approve Jobs</span>
+            </a>
+        </div>
+        <div class="col-lg mb-4">
+            <a href="{% url 'manage_sections' %}" class="link-box d-flex flex-column align-items-center justify-content-center">
+                <i class="fas fa-cogs fa-3x"></i>
+                <span class="mt-2">Manage Sections</span>
+            </a>
+        </div>
+        <div class="col-lg mb-4">
+            <a href="{% url 'lgout' %}" class="link-box d-flex flex-column align-items-center justify-content-center">
+                <i class="fas fa-sign-out-alt fa-3x"></i>
+                <span class="mt-2">Logout</span>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+
+<style>
+    /* Adjust the padding-top of container-fluid to ensure space for fixed navbar */
+    .container {
+        padding: 20px;
+        margin-top: 100px;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        color: #f7fdff;
+        margin-bottom: 2rem;
+    }
+
+    .link-box {
+        display: block;
+        padding: 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #454242;
+        background-color: #f8f9fa;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, box-shadow 0.3s;
+        text-align: center;
+    }
+
+    .link-box i {
+        font-size: 3rem;
+    }
+
+    .link-box:hover {
+        background-color: #3a3c3e;
+        color: #fff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .link-box span {
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .link-box {
+            padding: 15px;
+            font-size: 1rem;
+        }
+
+        .link-box i {
+            font-size: 2rem;
+        }
+
+        .link-box span {
+            font-size: 1rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .link-box {
+            padding: 10px;
+        }
+
+        .link-box i {
+            font-size: 1.5rem;
+        }
+
+        .link-box span {
+            font-size: 0.9rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'page2.html' %}
+{% block content %}
+<title>JOB PORTAL</title>
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: #f6f6ff;">Job Listings</h2>
+    {% if messages %}
+        <div id="message-container" class="center-message">
+          <ul>
+            {% for message in messages %}
+              <li class="alert alert-success" >{{ message }}</li>  <!-- You can change the class for styling -->
+            {% endfor %}
+          </ul>
+        </div>
+        
+        <!-- Add this script to hide the message after 3 seconds -->
+        <script>
+          setTimeout(function() {
+            var messageContainer = document.getElementById('message-container');
+            if (messageContainer) {
+              messageContainer.style.display = 'none';
+            }
+          }, 3000); // 3000 milliseconds = 3 seconds
+        </script>
+      {% endif %}
+    <div class="table-responsive">
+        <table class="table table-hover mt-4 custom-table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Section</th>
+                    <th>Experience</th>
+                    <th>Skills</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.section.name }}</td>
+                    <td>{{ job.experiance }}</td>
+                    <td>{{ job.skills }}</td>
+                    <td>
+                        <a href="{% url 'employer_edit_job' job.id %}" class="btn btn-primary custom-btn">Edit</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'employer_delete_job' job.id %}" class="btn btn-danger custom-btn">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<style>
+    /* body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #a1cdec, #e0b0ff);
+    } */
+    .container {
+            background-color: rgba(106, 102, 102, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: auto;
+            animation: fadeInUp 1s;
+        }
+
+    .custom-table {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: rgba(243, 237, 237, 0.5);
+    }
+
+    .custom-table thead {
+        background-color: #c2bdbd;
+        color: #f5f7f8;
+    }
+
+    .custom-table th, .custom-table td {
+        padding: 15px;
+        vertical-align: middle;
+    }
+
+    .custom-btn {
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .custom-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Media query for responsiveness */
+    @media (max-width: 768px) {
+        .custom-table {
+            font-size: 14px;
+        }
+
+        .custom-btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+{% endblock %}

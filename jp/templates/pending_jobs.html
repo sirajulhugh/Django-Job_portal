@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOB PORTAL</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin-top: 150px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+            max-width: 900px;
+        }
+        th, td {
+            white-space: nowrap; /* Prevent table content from wrapping */
+        }
+        th {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .btn-action {
+            transition: transform 0.3s, opacity 0.3s;
+            font-size: 1rem; /* Default button size */
+        }
+        .btn-action:hover {
+            transform: scale(1.05);
+            opacity: 0.8;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Scrollable table on small screens */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem; /* Smaller heading size on smaller screens */
+            }
+            .container {
+                padding: 15px;
+                margin-top: 100px;
+            }
+            .table {
+                font-size: 0.875rem; /* Smaller table text on smaller screens */
+            }
+            .btn-action {
+                font-size: 0.875rem; /* Smaller button size on smaller screens */
+                padding: 0.4rem 0.6rem; /* Adjust padding for smaller buttons */
+            }
+        }
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.25rem; /* Further reduce heading size */
+            }
+            .table {
+                font-size: 0.75rem; /* Smaller table text on extra small screens */
+            }
+            .btn-action {
+                font-size: 0.75rem; /* Further reduce button size */
+                padding: 0.3rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Pending Jobs</h1>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Job Title</th>
+                        <th scope="col">Section</th>
+                        <th scope="col">Company</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                        <tr>
+                            <td>{{ job.title }}</td>
+                            <td>{{ job.section.name }}</td>
+                            <td>{{ job.employer.name }}</td>
+                            <td><a href="{% url 'job_details' job.id %}" style="text-decoration: none;color: rgb(44, 45, 46);">View More Details</a></td>
+                            <td>
+                                <form method="post" action="{% url 'xapprove_job' job.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success btn-action">Approve</button>
+                                </form>
+                                <form method="post" action="{% url 'xreject_job' job.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-action">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No pending jobs.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div style="text-align: center;">
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-dark mt-4 btn-custom">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
+                    <button type="button" class="btn-close" aria-label="Close" id="closeModalButton"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ notification_count }} job(s) are ready and waiting for your approval to find their potential candidates.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closeModalButtonFooter">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script to show and close modal -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show the modal when the page loads
+            $('#notificationModal').modal('show');
+
+            // Close the modal when the close button is clicked
+            document.getElementById('closeModalButton').addEventListener('click', function() {
+                $('#notificationModal').modal('hide');
+            });
+            document.getElementById('closeModalButtonFooter').addEventListener('click', function() {
+                $('#notificationModal').modal('hide');
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

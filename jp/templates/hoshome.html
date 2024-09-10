@@ -1,0 +1,912 @@
+{% extends 'page4.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+body{
+    background: url("{% static 'images/welcome.jpeg' %}") no-repeat center center fixed;
+background-size: cover;
+
+}
+
+
+.heading {
+    text-align: center;
+    color: #454343;
+    font-size: 30px;
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 70px;
+    text-transform: uppercase;
+    z-index: 999;
+}
+.white-heading{
+    color: #ffffff;
+}
+.heading:after {
+    content: ' ';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    height: 40px;
+    width: 180px;
+    border-radius: 4px;
+    transform: translateX(-50%);
+    background: url(img/heading-line.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.white-heading:after {
+    background: url(https://i.ibb.co/d7tSD1R/heading-line-white.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.heading span {
+    font-size: 18px;
+    display: block;
+    font-weight: 500;
+}
+.white-heading span {
+    color: #ffffff;
+}
+/*-----Testimonial-------*/
+
+.testimonial:after {
+    position: absolute;
+    top: -0 !important;
+    left: 0;
+    content: " ";
+    background: url(img/testimonial.bg-top.png);
+    background-size: 100% 100px;
+    width: 100%;
+    height: 100px;
+    float: left;
+    z-index: 99;
+}
+
+.testimonial {
+    min-height: 375px;
+    position: relative;
+    background: url("{% static 'images/test1.jpg' %}");
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-position: center;
+        background-size: cover;
+}
+#testimonial4 .carousel-inner:hover{
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+#testimonial4 .carousel-inner:active{
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+#testimonial4 .carousel-inner .item{
+  overflow: hidden;
+}
+
+.testimonial4_indicators .carousel-indicators{
+  left: 0;
+  margin: 0;
+  width: 100%;
+  font-size: 0;
+  height: 20px;
+  bottom: 15px;
+  padding: 0 5px;
+  cursor: e-resize;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: absolute;
+  text-align: center;
+  white-space: nowrap;
+}
+.testimonial4_indicators .carousel-indicators li{
+  padding: 0;
+  width: 14px;
+  height: 14px;
+  border: none;
+  text-indent: 0;
+  margin: 2px 3px;
+  cursor: pointer;
+  display: inline-block;
+  background: #ffffff;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+}
+.testimonial4_indicators .carousel-indicators .active{
+  padding: 0;
+  width: 14px;
+  height: 14px;
+  border: none;
+  margin: 2px 3px;
+  background-color: #9dd3af;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+}
+.testimonial4_indicators .carousel-indicators::-webkit-scrollbar{
+  height: 3px;
+}
+.testimonial4_indicators .carousel-indicators::-webkit-scrollbar-thumb{
+  background: #eeeeee;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+.testimonial4_control_button .carousel-control{
+  top: 175px;
+  opacity: 1;
+  width: 40px;
+  bottom: auto;
+  height: 40px;
+  font-size: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  overflow: hidden;
+  line-height: 38px;
+  text-shadow: none;
+  text-align: center;
+  position: absolute;
+  background: transparent;
+  border: 2px solid #ffffff;
+  text-transform: uppercase;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: all 0.6s cubic-bezier(0.3,1,0,1);
+  transition: all 0.6s cubic-bezier(0.3,1,0,1);
+}
+.testimonial4_control_button .carousel-control.left{
+  left: 7%;
+  top: 50%;
+  right: auto;
+}
+.testimonial4_control_button .carousel-control.right{
+  right: 7%;
+  top: 50%;
+  left: auto;
+}
+.testimonial4_control_button .carousel-control.left:hover,
+.testimonial4_control_button .carousel-control.right:hover{
+  color: #000;
+  background: #fff;
+  border: 2px solid #fff;
+}
+
+.testimonial4_header{
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 550px;
+  display: block;
+  margin: 30px auto;
+  text-align: center;
+  position: relative;
+}
+.testimonial4_header h4{
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 600;
+  position: relative;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.testimonial4_slide{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 70%;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+  text-align: center;
+}
+.testimonial4_slide img {
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 215px;
+    height: 215px;
+    margin: auto;
+    display: block;
+    color: #f2f2f2;
+    font-size: 18px;
+    line-height: 46px;
+    text-align: center;
+    position: relative;
+    border-radius: 50%;
+    box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.23);
+    -o-box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.23);
+    -webkit-box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.23);
+}
+.testimonial4_slide p {
+    color: #ffffff;
+    font-size: 20px;
+    line-height: 1.4;
+    margin: 40px 0 20px 0;
+}
+.testimonial4_slide h4 {
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.testimonial .carousel {
+	padding-bottom:50px;
+}
+.testimonial .carousel-control-next-icon, .testimonial .carousel-control-prev-icon {
+    width: 35px;
+    height: 35px;
+}
+/* ------testimonial  close-------*/
+
+/* ------welcome begins-------*/
+
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background: url("{% static 'images/welcome.jpeg' %}") no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-container h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #ff0000, 0 0 30px #d5ff1b, 0 0 40px #0aa22e, 0 0 50px #1cc7c1, 0 0 60px #1517b3, 0 0 70px #b00a94;
+    }
+    to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #ca0da1, 0 0 40px #141ea9, 0 0 50px #17a3ca, 0 0 60px #09ba38, 0 0 70px #becd17, 0 0 80px #de1111;
+    }
+}
+
+.welcome-container p {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    line-height: 1.5;
+    max-width: 800px;
+    animation: fadeIn 2s ease-in;
+    opacity: 0.9;
+}
+
+.welcome-container .buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.welcome-container .button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(45deg, #888686, #1c1b1b);
+    border: none;
+    border-radius: 50px;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-container .button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 65, 108, 0.6);
+}
+
+.welcome-container .button:before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+    transition: transform 0.5s ease;
+    transform: translateX(-100%) translateY(-100%);
+    z-index: 1;
+}
+
+.welcome-container .button:hover:before {
+    transform: translateX(100%) translateY(100%);
+}
+
+@media (max-width: 768px) {
+    .welcome-container h1 {
+        font-size: 2rem;
+    }
+    .welcome-container p {
+        font-size: 1rem;
+    }
+    .welcome-container .buttons {
+        flex-direction: column;
+    }
+    .welcome-container .button {
+        margin-bottom: 10px;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-container h1 {
+        font-size: 1.8rem;
+    }
+    .welcome-container p {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ------welcome  close-------*/
+
+  </style>
+<body>
+    <div class="welcome-container animate__animated animate__fadeIn">
+        <h1>Welcome to JobMatch Portal</h1>
+        <p><strong>Your gateway to connect jobseekers with employers. Find your next opportunity or the perfect candidate today.</strong></p>
+        <div class="buttons">
+            <a href="{% url 'ufiltered_jobs' %}" class="button animate__animated animate__bounceInLeft">I'm a Jobseeker</a>
+            <a href="{% url 'login' %}" class="button animate__animated animate__bounceInRight">I'm an Employer</a>
+        </div>
+    </div>
+    
+
+
+    <section class="testimonial text-center">
+        <div class="container">
+
+            <div class="heading white-heading">
+                JOB PORTAL
+            </div>
+            <div id="testimonial4" class="carousel slide testimonial4_indicators testimonial4_control_button thumb_scroll_x swipe_x" data-ride="carousel" data-pause="hover" data-interval="5000" data-duration="2000">
+             
+                <div class="carousel-inner" role="listbox">
+                    <div class="carousel-item active">
+                        <div class="testimonial4_slide">
+                            <img src="{% static 'images/aij.jpg' %}" class="img-circle img-responsive" />
+                            <p> AI-powered job matching leverages machine learning algorithms to analyze user profiles, behavior, and preferences, 
+                                providing personalized job recommendations. This feature ensures that job seekers receive relevant job suggestions 
+                                tailored to their skills and interests, increasing the likelihood of finding suitable employment. For employers, it 
+                                helps in identifying the best candidates more efficiently, reducing the time and effort spent on the hiring process.</p>
+                            <h4>AI-Powered Job Matching</h4>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="testimonial4_slide">
+                            <img src="{% static 'images/interview.jpg' %}" class="img-circle img-responsive" />
+                            <p>Video resumes and interviews bring a dynamic and engaging element to the job application process. Job seekers can showcase 
+                                their personality, communication skills, and enthusiasm through video resumes, making a stronger impression on potential 
+                                employers. Additionally, conducting initial video interviews through the app streamlines the recruitment process, saving 
+                                time for both parties and allowing for a more flexible and convenient interview scheduling.</p>
+                            <h4>Video Resumes and Interviews</h4>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="testimonial4_slide">
+                            <img src="{% static 'images/optimisation.jpeg' %}" class="img-circle img-responsive" />
+                            <p>Ensuring that your job portal app is fully optimized for mobile devices and accessible to users with disabilities is crucial 
+                                for providing a seamless user experience. Mobile optimization means that the app should function smoothly on various devices,
+                                 including smartphones and tablets, with responsive design elements that adapt to different screen sizes. Accessibility features,
+                                  ensure that users with disabilities can navigate and use the app effectively.</p>
+                            <h4>Mobile Optimization and Accessibility</h4>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="testimonial4_slide">
+                            <img src="{% static 'images/review.jpeg' %}" class="img-circle img-responsive" />
+                            <p>Providing detailed company profiles with insights, employee reviews, and ratings helps job seekers make informed decisions 
+                                about potential employers. This feature offers transparency and allows job seekers to understand the company culture, work 
+                                environment, and employee satisfaction levels. For employers, it serves as an opportunity to highlight their strengths and 
+                                attract top talent by showcasing positive reviews and company achievements.</p>
+                            <h4>Company Insights and Reviews</h4>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#testimonial4" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#testimonial4" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+<br><br><br><br><br><br>
+
+
+    <div class="container" >
+        <div class="blog-card">
+			<div class="meta">
+			  <div class="photo" style="background-image: url('{% static 'images/aa.jpg' %}')"></div>
+			  <ul class="details">
+				<li class="author"><a href="#">Siraj</a></li>
+				<li class="date">Aug. 24, 2015</li>
+				<li class="tags">
+				  <ul>
+					<li><a href="#">JOBS</a></li>
+                            <li><a href="#">RECRUT</a></li>
+                            <li><a href="#">HIRING</a></li>
+                            <li><a href="#">GRADUATES</a></li>
+                            <li><a href="#">EXPERIANCE</a></li>
+                            <li><a href="#">CAREER</a></li>
+				  </ul>
+				</li>
+			  </ul>
+			</div>
+			<div class="description">
+                <h1>Easy to Use</h1>
+                <h2>Seamless Integration</h2>
+                <p>Job matching portal applications have revolutionized the way job 
+                    seekers and employers connect, significantly enhancing the efficiency 
+                    of the recruitment process. These platforms utilize advanced algorithms 
+                    and data analytics to match candidates with job opportunities that closely 
+                    align with their skills, qualifications, and preferences...</p>
+			  <p class="read-more">
+				<a href="#">Read More</a>
+			  </p>
+			</div>
+		  </div>
+          <br><br><br>
+
+		  <div class="blog-card alt" data-aos="fade-right">
+            <div class="meta">
+                <div class="photo" style="background-image: url('{% static 'images/ab.jpg' %}')"></div>
+                <ul class="details">
+                    <li class="author"><a href="#">Siraj</a></li>
+                    <li class="date">July 15, 2023</li>
+                    <li class="tags">
+                        <ul>
+                            <li><a href="#">JOBS</a></li>
+                            <li><a href="#">RECRUT</a></li>
+                            <li><a href="#">HIRING</a></li>
+                            <li><a href="#">GRADUATES</a></li>
+                            <li><a href="#">EXPERIANCE</a></li>
+                            <li><a href="#">CAREER</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="description">
+                <h1>Top Multinational Companies</h1>
+                <h2>Highest packages</h2>
+                <p>Many multinational companies are renowned for offering competitive salary 
+                    packages to attract top talent.These companies not only provide high salaries 
+                    but often include a range of additional benefits such as health insurance, retirement 
+                    plans, paid time off, and career development opportunities, making them highly desirable 
+                    employers in the global job market....</p>
+                <p class="read-more">
+                    <a href="#">Read More</a>
+                </p>
+            </div>
+        </div>
+
+        <br><br><br>
+
+        <div class="blog-card" data-aos="fade-left">
+            <div class="meta">
+                <div class="photo" style="background-image: url('{% static 'images/ac.webp' %}')"></div>
+                <ul class="details">
+                    <li class="author"><a href="#">Siraj</a></li>
+                    <li class="date">March 22, 2024</li>
+                    <li class="tags">
+                        <ul>
+                            <li><a href="#">JOBS</a></li>
+                            <li><a href="#">RECRUT</a></li>
+                            <li><a href="#">HIRING</a></li>
+                            <li><a href="#">GRADUATES</a></li>
+                            <li><a href="#">EXPERIANCE</a></li>
+                            <li><a href="#">CAREER</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="description">
+                <h1>Highest Recruitment rate</h1>
+                <h2>Lakhs of satisfied users</h2>
+                <p>The combination of high recruitment rates and user satisfaction indicates that job matching
+                    portal apps play an essential role in the modern hiring landscape, streamlining the process
+                     for both job seekers and employers and contributing to a more efficient labor market overall.
+                      The satisfaction rates can also reflect users experiences with the app's functionality, user
+                       interface, and the quality of job matches provided, leading to a positive feedback loop that 
+                       encourages further adoption and success</p>
+                <p class="read-more">
+                    <a href="#">Read More</a>
+                </p>
+            </div>
+        </div>
+          
+
+		</div>
+		  
+
+    </div>
+
+    <style>
+
+    /*PEN STYLES*/
+
+    * {
+box-sizing: border-box;
+}
+
+/* body {
+background: #f1f1f1;
+display: flex;
+flex-direction:column;
+font-size: 1rem;
+justify-content: center;
+align-items: center;
+height: 100vh;
+} */
+
+
+.blog-card {
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            margin: 1rem auto;
+            box-shadow: 0 3px 7px -1px rgba(0, 0, 0, .1);
+            background: #fff;
+            line-height: 1.4;
+            font-family: sans-serif;
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+
+        [data-aos="fade-up"] {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        [data-aos="fade-right"] {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        [data-aos="fade-left"] {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+
+        .blog-card a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .blog-card:hover .photo {
+            transform: scale(1.3) rotate(3deg);
+        }
+
+        .meta {
+            position: relative;
+            z-index: 0;
+            height: 200px;
+        }
+
+        .photo {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform .2s;
+        }
+
+        .details,
+        .details ul {
+            margin: auto;
+            padding: 0;
+            list-style: none;
+        }
+
+        .details {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -100%;
+            margin: auto;
+            transition: left .2s;
+            background: rgba(0, 0, 0, .6);
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            font-size: .9rem;
+        }
+
+        .details a {
+            text-decoration: dotted underline;
+        }
+
+        .author:before {
+            font-family: FontAwesome;
+            margin-right: 10px;
+            content: "\f007";
+        }
+
+        .date:before {
+            font-family: FontAwesome;
+            margin-right: 10px;
+            content: "\f133";
+        }
+
+        .tags ul:before {
+            font-family: FontAwesome;
+            content: "\f02b";
+            margin-right: 10px;
+        }
+
+        .tags ul li {
+            display: inline-block;
+            margin-right: 2px;
+        }
+
+        .description {
+            padding: 1rem;
+            background: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .description h1 {
+            line-height: 1;
+            margin: 0;
+            font-size: 1.7rem;
+            font-family: Poppins, sans-serif;
+        }
+
+        .description h2 {
+            font-size: 1rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            color: #a2a2a2;
+            margin-top: 5px;
+        }
+
+        .read-more {
+            text-align: right;
+        }
+
+        .read-more a {
+            color: #585a59;
+            display: inline-block;
+            position: relative;
+        }
+
+        .read-more a:after {
+            content: "\f061";
+            font-family: FontAwesome;
+            margin-left: -10px;
+            opacity: 0;
+            vertical-align: middle;
+            transition: margin .3s, opacity .3s;
+        }
+
+        .read-more a:hover:after {
+            margin-left: 5px;
+            opacity: 1;
+        }
+
+        .description p {
+            position: relative;
+            margin: 1rem 0 0;
+        }
+
+        .description p:first-of-type {
+            margin-top: 1.25rem;
+        }
+
+        .description p:first-of-type:before {
+            content: "";
+            position: absolute;
+            height: 5px;
+            background: #757876;
+            width: 35px;
+            top: -0.75rem;
+            border-radius: 3px;
+        }
+
+        .blog-card:hover .details {
+            left: 0%;
+        }
+
+
+        @media (min-width: 640px) {
+            .blog-card {
+                flex-direction: row;
+                max-width: 1000px;
+            }
+
+            .meta {
+                flex-basis: 40%;
+                height: auto;
+            }
+
+            .description {
+                flex-basis: 60%;
+                padding-left: 20px;
+            }
+
+            .description:before {
+                transform: skewX(-3deg);
+                content: "";
+                background: #fff;
+                width: 30px;
+                position: absolute;
+                left: -10px;
+                top: 0;
+                bottom: 0;
+                z-index: -1;
+            }
+
+            .blog-card.alt {
+                flex-direction: row-reverse;
+            }
+
+            .blog-card.alt .description:before {
+                left: inherit;
+                right: -10px;
+                transform: skew(3deg)
+            }
+
+            .blog-card.alt .details {
+                padding-left: 25px;
+            }
+        }
+
+
+    </style>
+
+<br><br><br><br>
+<!-- TESTIMONIALS -->
+<section class="testimonial text-center" style="min-height: 200px; position: relative; background: url('{% static 'images/test2.jpeg' %}') center center/cover no-repeat; padding-top: 50px; padding-bottom: 50px;">
+    <div class="container">
+
+        <div class="heading white-heading">
+            Testimony
+        </div>
+        <div id="testimonial5" class="carousel slide testimonial4_indicators testimonial4_control_button thumb_scroll_x swipe_x" data-ride="carousel" data-pause="hover" data-interval="2000" data-duration="2000">
+
+
+            <div class="carousel-inner" role="listbox">
+                <div class="carousel-item active">
+                    <div class="testimonial4_slide">
+                        <img src="{% static 'images/pro1.jpeg' %}" class="img-circle img-responsive" alt="Testimonial Image 1" />
+                        <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate.</p>
+                        <h4>EMILIANO AQUILANI</h4>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial4_slide">
+                        <img src="{% static 'images/pro2.jpeg' %}" class="img-circle img-responsive" alt="Testimonial Image 2" />
+                        <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate.</p>
+                        <h4>ANNA ITURBE</h4>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial4_slide">
+                        <img src="{% static 'images/pro3.jpeg' %}" class="img-circle img-responsive" alt="Testimonial Image 3" />
+                        <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate.</p>
+                        <h4>LARA ATKINSON</h4>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial4_slide">
+                        <img src="{% static 'images/pro4.jpeg' %}" class="img-circle img-responsive" alt="Testimonial Image 4" />
+                        <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate.</p>
+                        <h4>IAN OWEN</h4>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial4_slide">
+                        <img src="{% static 'images/pro5.jpeg' %}" class="img-circle img-responsive" alt="Testimonial Image 5" />
+                        <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate.</p>
+                        <h4>MICHAEL TEDDY</h4>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#testimonial5" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#testimonial5" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+
+    <!-- END OF TESTIMONIALS -->
+
+
+<!-- END OF TESTIMONIALS -->
+
+
+
+
+
+
+
+<br><br><br><br><br><br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div style="height: 500px; border-radius: 40px; box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22); cursor: pointer; transition: 0.4s;">
+                <div style="height: 80%; border-radius: 40px;">
+                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbm0wd28wZWNsOWQ2amEybGN1a3MwMm5tdmYxejd6YjhoamtyM3NlNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gfnKANlOQNZLAXPQJi/giphy.gif
+                    " style="width: 100%; height: 100%; border-radius: 40px 40px 0 0; object-fit: cover;" />
+                </div>
+                <div style="height: 20%; text-align: center; border-radius: 0px 0px 40px 40px; font-family: sans-serif; font-weight: bold; font-size: 20px; color: black;">
+                    <p style="margin: 0; line-height: 60px;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div style="height: 500px; border-radius: 40px; box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22); cursor: pointer; transition: 0.4s;">
+                <div style="height: 80%; border-radius: 40px;">
+                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHFzeXpndXQ0aW1uYWhoajhsMXUydXUxYmdlZmcweGprYjU5c3A0YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ryyTSYVwxbJIpxtsJU/giphy.gif" style="width: 100%; height: 100%; border-radius: 40px 40px 0 0; object-fit: cover;" />
+                </div>
+                <div style="height: 20%; text-align: center; border-radius: 0px 0px 40px 40px; font-family: sans-serif; font-weight: bold; font-size: 20px; color: white;">
+                    <p style="margin: 0; line-height: 60px;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div style="height: 500px; border-radius: 40px; box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22); cursor: pointer; transition: 0.4s;">
+                <div style="height: 80%; border-radius: 40px;">
+                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjNoZnB2NDk0a2tqdnBwbnhvNWFtcnF2bnQxa3lzZzh1ZjN1MDRkbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/28hvM5t0B6y1FwUxcL/giphy.gif" style="width: 100%; height: 100%; border-radius: 40px 40px 0 0; object-fit: cover;" />
+                </div>
+                <div style="height: 20%; text-align: center; border-radius: 0px 0px 40px 40px; font-family: sans-serif; font-weight: bold; font-size: 20px; color: black;">
+                    <p style="margin: 0; line-height: 60px;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</html>
+{% endblock %}

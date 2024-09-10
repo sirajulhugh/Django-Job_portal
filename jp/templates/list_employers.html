@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            /* background: radial-gradient(circle, black, white); */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            max-width: 1100px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s;
+            margin-top: 150px; 
+            
+        }
+
+        h2,
+        h3 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        .btn-custom {
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            animation: slideIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        tr:nth-child(even) th,
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        img {
+            height: 50px;
+            width: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(-10px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container ">
+        <h2 class="text-center mb-4">Company List</h2>
+
+        <div class="table-responsive">
+            <table class="table table-striped mt-3">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Logo</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employer in employers %}
+                    <tr>
+                        <td>{{ employer.name }}</td>
+                        <td>
+                            {% if employer.logo %}
+                            <img src="{{ employer.logo.url }}" alt="Logo">
+                            {% else %}
+                            No Logo
+                            {% endif %}
+                        </td>
+                        <td>{{ employer.user.email }}</td>
+                        <td>
+                            <button style="background-color: #7a7a75;" type="button"
+                                class="btn btn-primary mt-3 btn-custom"
+                                onclick="openModal('{{ employer.id }}')"
+                                onmouseover="this.style.backgroundColor='#3b3b38'"
+                                onmouseout="this.style.backgroundColor='#7a7a75'">
+                                View More Details
+                            </button>
+                            <form method="post" action="{% url 'delete_employer' employer.id %}"
+                                style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm mt-3 btn-custom">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <!-- Modal for each employer -->
+                    <div class="modal fade" id="employerDetailsModal-{{ employer.id }}" tabindex="-1"
+                        aria-labelledby="employerDetailsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="employerDetailsModalLabel">Company Details</h5>
+                                    <a href="javascript:window.location.reload();" class="btn-close"></a>
+                                </div>
+                                <div class="modal-body">
+                                    {% if employer.name %}
+                                        <h5>Name: {{ employer.name }}</h5>
+                                    {% endif %}
+                                    
+                                    {% if employer.address %}
+                                        <p>Address: {{ employer.address }}</p>
+                                    {% endif %}
+                                    
+                                    {% if employer.phonenumber %}
+                                        <p>Phone Number: {{ employer.phonenumber }}</p>
+                                    {% endif %}
+                                    
+                                    {% if employer.pincode %}
+                                        <p>Pincode: {{ employer.pincode }}</p>
+                                    {% endif %}
+                                    
+                                    {% if employer.state %}
+                                        <p>State: {{ employer.state }}</p>
+                                    {% endif %}
+                                    
+                                    {% if employer.city %}
+                                        <p>City: {{ employer.city }}</p>
+                                    {% endif %}
+                                    
+                                    {% if employer.description %}
+                                        <p>Description: {{ employer.description }}</p>
+                                    {% endif %}
+                                    
+                                    {% if employer.document %}
+                                        <p>
+                                            Document:
+                                            <a href="{{ employer.document.url }}" download class="btn btn-secondary">Download</a>
+                                        </p>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="modal-footer">
+                                    <a href="javascript:window.location.reload();" class="btn btn-secondary">Close</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-dark mt-4 btn-custom">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function openModal(employerId) {
+            var modalId = '#employerDetailsModal-' + employerId;
+            var modalElement = document.querySelector(modalId);
+            var modal = new bootstrap.Modal(modalElement);
+            modal.show();
+        }
+    </script><br><br><br><br><br><br><br><br><br><br>
+</body>
+
+</html>
+
+
+
+
+{% endblock %}
